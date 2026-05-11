@@ -1,33 +1,66 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>OpenReplay Demo</title>
+  <title>OpenReplay Railway Demo</title>
+
+  <!-- OpenReplay Tracking Code -->
+  <script>
+    var initOpts = {
+      projectKey: "M55ugkUw6WlG8Dzd28Bf",
+      defaultInputMode: 2,
+      obscureTextNumbers: false,
+      obscureTextEmails: true,
+    };
+
+    var startOpts = { userID: "railway-demo-user" };
+
+    (function(A,s,a,y,e,r){
+      r=window.OpenReplay=[e,r,y,[s-1, e]];
+      s=document.createElement('script');
+      s.src=A;
+      s.async=!a;
+      document.getElementsByTagName('head')[0].appendChild(s);
+
+      r.start=function(v){r.push([0])};
+      r.stop=function(v){r.push([1])};
+      r.setUserID=function(id){r.push([2,id])};
+      r.setUserAnonymousID=function(id){r.push([3,id])};
+      r.setMetadata=function(k,v){r.push([4,k,v])};
+      r.event=function(k,p,i){r.push([5,k,p,i])};
+      r.issue=function(k,p){r.push([6,k,p])};
+      r.isActive=function(){return false};
+      r.getSessionToken=function(){};
+    })(
+      "//static.openreplay.com/latest/openreplay.js",
+      1,
+      0,
+      initOpts,
+      startOpts
+    );
+  </script>
 </head>
 
 <body>
   <h1>OpenReplay Railway Demo</h1>
 
-  <button onclick="testClick()">
+  <p>User session tracking test</p>
+
+  <button onclick="trackClick()">
     Click Me
   </button>
 
   <script>
-    function testClick() {
+    function trackClick() {
       alert("Tracked Click!");
       console.log("Button clicked");
+
+      if (window.OpenReplay) {
+        window.OpenReplay.event(
+          "button_clicked",
+          { source: "railway-demo" }
+        );
+      }
     }
-  </script>
-
-  <script src="https://cdn.openreplay.com/latest/openreplay.js"></script>
-
-  <script>
-    const tracker = new window.OpenReplay({
-      projectKey: "M55ugkUw6WlG8Dzd28Bf",
-    });
-
-    tracker.start();
-
-    console.log("OpenReplay tracker started");
   </script>
 </body>
 </html>
