@@ -3,18 +3,31 @@
 <head>
   <title>OpenReplay Demo</title>
 </head>
+
 <body>
   <h1>OpenReplay Railway Demo</h1>
-  <button onclick="alert('Tracked Click!')">Click Me</button>
 
-  <script src="https://cdn.openreplay.com/tracker/latest/tracker-assist.js"></script>
+  <button onclick="testClick()">
+    Click Me
+  </button>
 
   <script>
-    var tracker = new OpenReplay({
+    function testClick() {
+      alert("Tracked Click!");
+      console.log("Button clicked");
+    }
+  </script>
+
+  <script src="https://cdn.openreplay.com/latest/openreplay.js"></script>
+
+  <script>
+    const tracker = new window.OpenReplay({
       projectKey: "M55ugkUw6WlG8Dzd28Bf",
     });
 
     tracker.start();
+
+    console.log("OpenReplay tracker started");
   </script>
 </body>
 </html>
